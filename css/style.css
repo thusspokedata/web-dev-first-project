@@ -5,7 +5,7 @@
 }
 
 html {
-  /* font-size: 62.5%; */
+  font-size: 120%; 
   box-sizing: border-box;
 }
 
@@ -14,6 +14,18 @@ body {
   color: #32afb2;
   background-color: #222;
   /* background-color: #60b347; */
+}
+
+h1,
+h2,
+h5,
+h4,
+p {
+  font-weight: bold;
+}
+
+header {
+  height: 100px;
 }
 
 .principal-title {
@@ -41,14 +53,35 @@ body {
   margin-top: 15px;
 }
 
-/* .btn-primary {
-  margin-top: 15px;
-  width: 50px;
-  height: auto;
-} */
+
+
 
 .flex-keyboard {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
 }
+
+/* hangman */
+
+.figure-container {
+  fill: transparent;
+  stroke: #fff;
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
+.figure-part {
+  display: none;
+}
+
+#hint {
+  font-size: 20px;
+}
+
+/* .you-won {
+  display: none;
+  padding: 80px;
+  margin: 200px;
+} */
+

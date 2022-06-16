@@ -9,32 +9,89 @@ const number = document.querySelector("#select-numbers");
 const hintClue = document.querySelector(".hint span");
 const btnInfo = document.querySelectorAll(".btn-info");
 const palabra = document.querySelector("#word span");
+const wordContainer = document.querySelector("#word-container");
+const elh2 = document.querySelectorAll("h2");
+const elh1 = document.querySelector("h1");
+const elbody = document.querySelector("body");
+// const elheader = document.querySelector("header");
+const figureParts = document.querySelectorAll('.figure-part');
 
 let secretWord = "";
-let score = 5;
+let score = 6;
 let highscore = 0;
 let clue = "";
 let guessedLetters = "";
 
+// --------------- score and highscore ---------------
+selScore.textContent = score;
+selHighScore.textContent = highscore;
+
+
+const newWordAndHint = () => {
+  let guess = Number(number.value);
+  secretWord = word(guess);
+  clue = hint(secretWord);
+  hintClue.textContent = "";
+  console.log(secretWord);
+  showWordState();
+};
+
 // ------------- changing keyboard color ------------
-function changingColor(element) {
-  element.style.backgroundColor = "#2FD2F2";
+const keyboardColorChanger = () => {
+  btnInfo.forEach((element) => {
+    element.style.backgroundColor = "#2FD2F2";
+  });
+};
+
+// ------------ display none ------------
+
+const displayNone = () => {
+  figureParts.forEach((part) => {
+    part.style.display = 'none';
+  })
 }
+
+// ---------------- black --------------------------
+const blackText = () => {
+  elbody.style.color = "black";
+  elbody.style.backgroundColor = "#60b347";
+  elh1.textContent = "You won...💃🏻🕺🏼💃🏻🕺🏼!!!";
+};
+
+const blueLightText = () => {
+  elbody.style.color = "#32afb2";
+  elbody.style.backgroundColor = "#222";
+  elh1.textContent = "Hang Man";
+};
 // --------- scoring -------------
 function scoring() {
   selScore.textContent -= 1;
 }
 
+// ------- function deleting buttons ----------
+const delButtons = () => {
+  const buttons = document.querySelectorAll(".btn-outline-light");
+  buttons.forEach((button) => {
+    button.remove();
+  });
+};
+
 //----------  showing word places -------------
 const showWordState = () => {
+  delButtons(); // deleting former buttons
   for (let letter of secretWord) {
     let button = document.createElement("button");
-    button.setAttribute("class", "btn btn-outline-light m-1 mt-4");
-    button.textContent = "_";
-    document.querySelector("#word-container").append(button);
+    if (letter === " " || letter === "-") {
+      newWordAndHint();
+    } else {
+      button.setAttribute("class", "btn btn-outline-light m-1 mt-4");
+      button.textContent = "_";
+      wordContainer.append(button);
+    }
   }
 };
 
+// ------------ checking words -------------------
 function checkingWord(e) {
   for (let i in secretWord) {
     if (secretWord[i] == e) {
@@ -43,67 +100,45 @@ function checkingWord(e) {
       buttons[i].textContent = e;
       guessedLetters += e;
       if (guessedLetters.length === secretWord.length) {
-        const alertList = document.querySelectorAll(".alert");
-        const alerts = [...alertList].map(
-          (element) => new bootstrap.Alert(element)
-        );
+        selHighScore.textContent = Number(selHighScore.textContent) + score;
+        guessedLetters = "";
+        blackText();
       }
     }
   }
 }
 
-// ----- checking letters and adding in button----
-const guessLetter = (e) => {
-  // console.log($(e.target).text());
-  // e.target.setAttribute("class", "btn-secondary"); // change the button background color to gray
-  // let guessLetter = $(e.target).text(); // get the text of button selected
-  // // loop through each letter in answer
-  // for (let i = 0; i < answer.length; i++) {
-  //   // if the selected letter is correct
-  //   if (guessLetter === answer[i]) {
-  //     let correctEle = $("#word-container .btn-warning")[i]; // get the correct letter button element with index
-  //     $(correctEle).text(guessLetter); // replace the '_' with correct letter
-  //     wordState[i] = guessLetter;
-  //   }
-  // }
-};
-
-// --------------- score and highscore ---------------
-selScore.textContent = score;
-selHighScore.textContent = highscore;
-
-// creating secret word and hint
-document.querySelector(".send-number").addEventListener("click", function () {
-  let guess = Number(number.value);
-  secretWord = word(guess);
-  clue = hint(secretWord);
-  hintClue.textContent = "";
-  console.log(secretWord);
-  showWordState();
-});
-
 // ------ HINT ------------
 document
   .querySelector(".btn-outline-warning")
   .addEventListener("click", function () {
-    hintClue.textContent = clue;
-    document.querySelector(".score span").textContent = 1;
+    if (secretWord.length > 0) {
+      hintClue.textContent = clue;
+      document.querySelector(".score span").textContent = 1;
+    }
   });
 
 // ---------------- reset ------------------------
 
-document.querySelector("#reset").addEventListener("click", function () {
-  selScore.textContent = 5;
-  selHighScore.textContent = 0;
+function reload() {
+  delButtons();
+  selScore.textContent = 6;
   wrongGuesses.textContent = 0;
-  btnInfo.forEach((element) => changingColor(element));
+  keyboardColorChanger();
+  blueLightText();
+  displayNone()
+  newWordAndHint()
+}
+
+document.querySelector("#reset").addEventListener("click", function () {
+  reload()
+  selHighScore.textContent = 0;
+  
 });
 
 // ---------------- new-game ------------------------
 document.querySelector("#new-game").addEventListener("click", function () {
-  selScore.textContent = 5;
-  wrongGuesses.textContent = 0;
-  btnInfo.forEach((element) => changingColor(element));
+  reload()
 });
 
 // --------------------- word on display ---------
@@ -112,296 +147,115 @@ document.querySelector("#new-game").addEventListener("click", function () {
 // #########################################################
 // #########################################################
 
-// ------------ clicked buttom --------
 let counter = 0;
-document.querySelector(".q").addEventListener("click", function () {
-  if (!secretWord.includes("Q")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("Q");
+const fails = (el) => {
+  ++counter;
+  wrongGuesses.textContent = counter;
+  el.style.backgroundColor = "red";
+  scoring();
+  hangman()
+  if (counter === 6) {
+    elh1.textContent = "You lost...🤌🏼🤌🏼👎🏼👎🏼🤦🏻‍♂️🤦🏻‍♀️!!!";
   }
+}
+
+const correct = (el, letter) => {
+  el.style.backgroundColor = "green";
+  checkingWord(letter);
+}
+
+// ------------------ Display hang-man parts -----------------
+const hangman = () => {
+  console.log('new line')
+  figureParts.forEach((part, index) => {
+    const errors = counter;
+      if (counter === 6) {
+        part.style.stroke = 'red'
+      } 
+     if (index < errors) {
+      part.style.display = 'block';
+    } else {
+      part.style.display = 'none';
+    }   
+})
+};
+
+// ------------ clicked buttom --------
+document.querySelector(".q").addEventListener("click", function () {
+  !secretWord.includes("Q") ? fails(this) : correct (this, "Q") 
 });
 document.querySelector(".w").addEventListener("click", function () {
-  if (!secretWord.includes("W")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("W");
-  }
+  !secretWord.includes("W") ? fails(this) : correct (this, "W") 
 });
 document.querySelector(".e").addEventListener("click", function () {
-  if (!secretWord.includes("E")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    console.log("working");
-    checkingWord("E");
-  }
+  !secretWord.includes("E") ? fails(this) : correct (this, "E") 
 });
 document.querySelector(".r").addEventListener("click", function () {
-  if (!secretWord.includes("R")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("R");
-  }
+  !secretWord.includes("R") ? fails(this) : correct (this, "R") 
 });
 document.querySelector(".t").addEventListener("click", function () {
-  if (!secretWord.includes("T")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("T");
-  }
+  !secretWord.includes("T") ? fails(this) : correct (this, "T") 
 });
 document.querySelector(".y").addEventListener("click", function () {
-  if (!secretWord.includes("Y")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("Y");
-  }
+  !secretWord.includes("Y") ? fails(this) : correct (this, "Y") 
 });
 document.querySelector(".u").addEventListener("click", function () {
-  if (!secretWord.includes("U")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("U");
-  }
+  !secretWord.includes("U") ? fails(this) : correct (this, "U") 
 });
 document.querySelector(".i").addEventListener("click", function () {
-  if (!secretWord.includes("I")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("I");
-  }
+  !secretWord.includes("I") ? fails(this) : correct (this, "I") 
 });
 document.querySelector(".o").addEventListener("click", function () {
-  if (!secretWord.includes("O")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("O");
-  }
+  !secretWord.includes("O") ? fails(this) : correct (this, "O") 
 });
 document.querySelector(".p").addEventListener("click", function () {
-  if (!secretWord.includes("P")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("P");
-  }
+  !secretWord.includes("P") ? fails(this) : correct (this, "P") 
 });
 document.querySelector(".a").addEventListener("click", function () {
-  if (!secretWord.includes("A")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("A");
-  }
+  !secretWord.includes("A") ? fails(this) : correct (this, "A") 
 });
 document.querySelector(".s").addEventListener("click", function () {
-  if (!secretWord.includes("S")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("S");
-  }
+  !secretWord.includes("S") ? fails(this) : correct (this, "S") 
 });
 document.querySelector(".d").addEventListener("click", function () {
-  if (!secretWord.includes("D")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("D");
-  }
+  !secretWord.includes("D") ? fails(this) : correct (this, "D") 
 });
 document.querySelector(".f").addEventListener("click", function () {
-  if (!secretWord.includes("F")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("D");
-  }
+  !secretWord.includes("F") ? fails(this) : correct (this, "F") 
 });
 document.querySelector(".g").addEventListener("click", function () {
-  if (!secretWord.includes("G")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("G");
-  }
+  !secretWord.includes("G") ? fails(this) : correct (this, "G") 
 });
 document.querySelector(".h").addEventListener("click", function () {
-  if (!secretWord.includes("H")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("H");
-  }
+  !secretWord.includes("H") ? fails(this) : correct (this, "H") 
 });
 document.querySelector(".j").addEventListener("click", function () {
-  if (!secretWord.includes("J")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("J");
-  }
+  !secretWord.includes("J") ? fails(this) : correct (this, "J") 
 });
 document.querySelector(".k").addEventListener("click", function () {
-  if (!secretWord.includes("K")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("K");
-  }
+  !secretWord.includes("K") ? fails(this) : correct (this, "K") 
 });
 document.querySelector(".l").addEventListener("click", function () {
-  if (!secretWord.includes("L")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("L");
-  }
+  !secretWord.includes("L") ? fails(this) : correct (this, "L") 
 });
 document.querySelector(".z").addEventListener("click", function () {
-  if (!secretWord.includes("Z")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("Z");
-  }
+  !secretWord.includes("Z") ? fails(this) : correct (this, "Z") 
 });
 document.querySelector(".x").addEventListener("click", function () {
-  if (!secretWord.includes("X")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("X");
-  }
+  !secretWord.includes("X") ? fails(this) : correct (this, "X") 
 });
 document.querySelector(".c").addEventListener("click", function () {
-  if (!secretWord.includes("C")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("C");
-  }
+  !secretWord.includes("C") ? fails(this) : correct (this, "C") 
 });
 document.querySelector(".v").addEventListener("click", function () {
-  if (!secretWord.includes("V")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("V");
-  }
+  !secretWord.includes("V") ? fails(this) : correct (this, "V") 
 });
 document.querySelector(".b").addEventListener("click", function () {
-  if (!secretWord.includes("B")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("B");
-  }
+  !secretWord.includes("B") ? fails(this) : correct (this, "B") 
 });
 document.querySelector(".n").addEventListener("click", function () {
-  if (!secretWord.includes("N")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("N");
-  }
+  !secretWord.includes("N") ? fails(this) : correct (this, "N") 
 });
 document.querySelector(".m").addEventListener("click", function () {
-  if (!secretWord.includes("M")) {
-    ++counter;
-    wrongGuesses.textContent = counter;
-    this.style.backgroundColor = "red";
-    scoring();
-  } else {
-    this.style.backgroundColor = "green";
-    checkingWord("M");
-  }
+  !secretWord.includes("M") ? fails(this) : correct (this, "M") 
 });
-
-// #########################################################
-// #########################################################
-// #########################################################
