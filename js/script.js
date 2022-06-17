@@ -56,6 +56,7 @@ const blackText = () => {
   elbody.style.color = "black";
   elbody.style.backgroundColor = "#60b347";
   elh1.textContent = "You won...💃🏻🕺🏼💃🏻🕺🏼!!!";
+  selHighScore.textContent = 0;
 };
 
 const blueLightText = () => {
@@ -156,6 +157,7 @@ const fails = (el) => {
   hangman()
   if (counter === 6) {
     elh1.textContent = "You lost...🤌🏼🤌🏼👎🏼👎🏼🤦🏻‍♂️🤦🏻‍♀️!!!";
+
   }
 }
 
