@@ -17,7 +17,6 @@
   <body>
     <header>
       <h1 class="principal-title">Hang Man</h1>
-
     </header>
     <main>
       <div class="main-flex">
@@ -29,7 +28,7 @@
                 Wrong guesses: <span>0</span> of 6
               </h4>
             </div>
-            
+
             <div class="game-container mt-3">
               <svg height="250" width="250" class="figure-container">
                 <!-- Rod -->
@@ -37,7 +36,7 @@
                 <line x1="180" y1="20" x2="180" y2="50" />
                 <line x1="60" y1="20" x2="60" y2="230" />
                 <line x1="20" y1="230" x2="100" y2="230" />
-        
+
                 <!-- Head -->
                 <circle cx="180" cy="70" r="20" class="figure-part" />
                 <!-- Body -->
@@ -53,17 +52,8 @@
             <div class="word" id="board">
               <div class="div" id="word-container"></div>
             </div>
-            
           </div>
         </div>
-        <!-- <div>
-          <div class="alert alert-success you-won" role="alert">
-            <h4 class="alert-heading">You won...🥳🥳🥳!!!</h4>
-            <button type="button" class="btn btn-success btn-won" id="new-game">
-              New Game
-            </button> 
-          </div>
-        </div> -->
         <!-- --------------------------- RIGHT SIDE ------------------------------------ -->
         <div>
           <h2 class="h2-title">Select number of letters</h2>
@@ -90,7 +80,6 @@
             <h2 class="score">Score: <span>0</span></h2>
             <h2 class="highscore">Highscore: <span>0</span></h2>
           </div>
-          
         </div>
       </div>
     </main>
@@ -99,42 +88,42 @@
     <section class="container border-top"></section>
     <section class="container col-4 mt-2">
       <h2 class="h2-title text-center">Choose a letter:</h2>
-          <div>
-            <div class="flex-keyboard">
-              <div class="mt-4 d-flex justify-content-around">
-                <button type="button" class="btn btn-info q">Q</button>
-                <button type="button" class="btn btn-info w">W</button>
-                <button type="button" class="btn btn-info e">E</button>
-                <button type="button" class="btn btn-info r">R</button>
-                <button type="button" class="btn btn-info t">T</button>
-                <button type="button" class="btn btn-info y">Y</button>
-                <button type="button" class="btn btn-info u">U</button>
-                <button type="button" class="btn btn-info i">I</button>
-                <button type="button" class="btn btn-info o">O</button>
-                <button type="button" class="btn btn-info p">P</button>
-              </div>
-              <div class="mt-4 d-flex justify-content-around">
-                <button type="button" class="btn btn-info a">A</button>
-                <button type="button" class="btn btn-info s">S</button>
-                <button type="button" class="btn btn-info d">D</button>
-                <button type="button" class="btn btn-info f">F</button>
-                <button type="button" class="btn btn-info g">G</button>
-                <button type="button" class="btn btn-info h">H</button>
-                <button type="button" class="btn btn-info j">J</button>
-                <button type="button" class="btn btn-info k">K</button>
-                <button type="button" class="btn btn-info l">L</button>
-              </div>
-              <div class="mt-4 d-flex justify-content-around">
-                <button type="button" class="btn btn-info z">Z</button>
-                <button type="button" class="btn btn-info x">X</button>
-                <button type="button" class="btn btn-info c">C</button>
-                <button type="button" class="btn btn-info v">V</button>
-                <button type="button" class="btn btn-info b">B</button>
-                <button type="button" class="btn btn-info n">N</button>
-                <button type="button" class="btn btn-info m">M</button>
-              </div>
-            </div>
+      <div>
+        <div class="flex-keyboard">
+          <div class="mt-4 d-flex justify-content-around">
+            <button type="button" class="btn btn-info q">Q</button>
+            <button type="button" class="btn btn-info w">W</button>
+            <button type="button" class="btn btn-info e">E</button>
+            <button type="button" class="btn btn-info r">R</button>
+            <button type="button" class="btn btn-info t">T</button>
+            <button type="button" class="btn btn-info y">Y</button>
+            <button type="button" class="btn btn-info u">U</button>
+            <button type="button" class="btn btn-info i">I</button>
+            <button type="button" class="btn btn-info o">O</button>
+            <button type="button" class="btn btn-info p">P</button>
           </div>
+          <div class="mt-4 d-flex justify-content-around">
+            <button type="button" class="btn btn-info a">A</button>
+            <button type="button" class="btn btn-info s">S</button>
+            <button type="button" class="btn btn-info d">D</button>
+            <button type="button" class="btn btn-info f">F</button>
+            <button type="button" class="btn btn-info g">G</button>
+            <button type="button" class="btn btn-info h">H</button>
+            <button type="button" class="btn btn-info j">J</button>
+            <button type="button" class="btn btn-info k">K</button>
+            <button type="button" class="btn btn-info l">L</button>
+          </div>
+          <div class="mt-4 d-flex justify-content-around">
+            <button type="button" class="btn btn-info z">Z</button>
+            <button type="button" class="btn btn-info x">X</button>
+            <button type="button" class="btn btn-info c">C</button>
+            <button type="button" class="btn btn-info v">V</button>
+            <button type="button" class="btn btn-info b">B</button>
+            <button type="button" class="btn btn-info n">N</button>
+            <button type="button" class="btn btn-info m">M</button>
+          </div>
+        </div>
+      </div>
     </section>
     <!-- ----------------------- HINT ---------------------------------- -->
     <section class="container">
@@ -148,7 +137,7 @@
       </div>
     </section>
     <footer>
-      <p class="mt-2  text-center">© Made with ❤️ by Antonio Saleme</p>
+      <p class="mt-2 text-center">© Made with ❤️ by Antonio Saleme</p>
     </footer>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"

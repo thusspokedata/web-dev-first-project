@@ -8,13 +8,11 @@ const wrongGuesses = document.querySelector(".wrong-guesses span");
 const number = document.querySelector("#select-numbers");
 const hintClue = document.querySelector(".hint span");
 const btnInfo = document.querySelectorAll(".btn-info");
-const palabra = document.querySelector("#word span");
 const wordContainer = document.querySelector("#word-container");
 const elh2 = document.querySelectorAll("h2");
 const elh1 = document.querySelector("h1");
 const elbody = document.querySelector("body");
-// const elheader = document.querySelector("header");
-const figureParts = document.querySelectorAll('.figure-part');
+const figureParts = document.querySelectorAll(".figure-part");
 
 let secretWord = "";
 let score = 6;
@@ -25,7 +23,6 @@ let guessedLetters = "";
 // --------------- score and highscore ---------------
 selScore.textContent = score;
 selHighScore.textContent = highscore;
-
 
 const newWordAndHint = () => {
   let guess = Number(number.value);
@@ -47,9 +44,9 @@ const keyboardColorChanger = () => {
 
 const displayNone = () => {
   figureParts.forEach((part) => {
-    part.style.display = 'none';
-  })
-}
+    part.style.display = "none";
+  });
+};
 
 // ---------------- black --------------------------
 const blackText = () => {
@@ -125,21 +122,21 @@ function reload() {
   delButtons();
   selScore.textContent = 6;
   wrongGuesses.textContent = 0;
+  guessedLetters = "";
   keyboardColorChanger();
   blueLightText();
-  displayNone()
-  newWordAndHint()
+  displayNone();
+  newWordAndHint();
 }
 
 document.querySelector("#reset").addEventListener("click", function () {
-  reload()
+  reload();
   selHighScore.textContent = 0;
-  
 });
 
 // ---------------- new-game ------------------------
 document.querySelector("#new-game").addEventListener("click", function () {
-  reload()
+  reload();
 });
 
 // --------------------- word on display ---------
@@ -154,110 +151,109 @@ const fails = (el) => {
   wrongGuesses.textContent = counter;
   el.style.backgroundColor = "red";
   scoring();
-  hangman()
+  hangman();
   if (counter === 6) {
     elh1.textContent = "You lost...🤌🏼🤌🏼👎🏼👎🏼🤦🏻‍♂️🤦🏻‍♀️!!!";
-
   }
-}
+};
 
 const correct = (el, letter) => {
   el.style.backgroundColor = "green";
   checkingWord(letter);
-}
+};
 
 // ------------------ Display hang-man parts -----------------
 const hangman = () => {
-  console.log('new line')
+  console.log("new line");
   figureParts.forEach((part, index) => {
     const errors = counter;
-      if (counter === 6) {
-        part.style.stroke = 'red'
-      } 
-     if (index < errors) {
-      part.style.display = 'block';
+    if (counter === 6) {
+      part.style.stroke = "red";
+    }
+    if (index < errors) {
+      part.style.display = "block";
     } else {
-      part.style.display = 'none';
-    }   
-})
+      part.style.display = "none";
+    }
+  });
 };
 
 // ------------ clicked buttom --------
 document.querySelector(".q").addEventListener("click", function () {
-  !secretWord.includes("Q") ? fails(this) : correct (this, "Q") 
+  !secretWord.includes("Q") ? fails(this) : correct(this, "Q");
 });
 document.querySelector(".w").addEventListener("click", function () {
-  !secretWord.includes("W") ? fails(this) : correct (this, "W") 
+  !secretWord.includes("W") ? fails(this) : correct(this, "W");
 });
 document.querySelector(".e").addEventListener("click", function () {
-  !secretWord.includes("E") ? fails(this) : correct (this, "E") 
+  !secretWord.includes("E") ? fails(this) : correct(this, "E");
 });
 document.querySelector(".r").addEventListener("click", function () {
-  !secretWord.includes("R") ? fails(this) : correct (this, "R") 
+  !secretWord.includes("R") ? fails(this) : correct(this, "R");
 });
 document.querySelector(".t").addEventListener("click", function () {
-  !secretWord.includes("T") ? fails(this) : correct (this, "T") 
+  !secretWord.includes("T") ? fails(this) : correct(this, "T");
 });
 document.querySelector(".y").addEventListener("click", function () {
-  !secretWord.includes("Y") ? fails(this) : correct (this, "Y") 
+  !secretWord.includes("Y") ? fails(this) : correct(this, "Y");
 });
 document.querySelector(".u").addEventListener("click", function () {
-  !secretWord.includes("U") ? fails(this) : correct (this, "U") 
+  !secretWord.includes("U") ? fails(this) : correct(this, "U");
 });
 document.querySelector(".i").addEventListener("click", function () {
-  !secretWord.includes("I") ? fails(this) : correct (this, "I") 
+  !secretWord.includes("I") ? fails(this) : correct(this, "I");
 });
 document.querySelector(".o").addEventListener("click", function () {
-  !secretWord.includes("O") ? fails(this) : correct (this, "O") 
+  !secretWord.includes("O") ? fails(this) : correct(this, "O");
 });
 document.querySelector(".p").addEventListener("click", function () {
-  !secretWord.includes("P") ? fails(this) : correct (this, "P") 
+  !secretWord.includes("P") ? fails(this) : correct(this, "P");
 });
 document.querySelector(".a").addEventListener("click", function () {
-  !secretWord.includes("A") ? fails(this) : correct (this, "A") 
+  !secretWord.includes("A") ? fails(this) : correct(this, "A");
 });
 document.querySelector(".s").addEventListener("click", function () {
-  !secretWord.includes("S") ? fails(this) : correct (this, "S") 
+  !secretWord.includes("S") ? fails(this) : correct(this, "S");
 });
 document.querySelector(".d").addEventListener("click", function () {
-  !secretWord.includes("D") ? fails(this) : correct (this, "D") 
+  !secretWord.includes("D") ? fails(this) : correct(this, "D");
 });
 document.querySelector(".f").addEventListener("click", function () {
-  !secretWord.includes("F") ? fails(this) : correct (this, "F") 
+  !secretWord.includes("F") ? fails(this) : correct(this, "F");
 });
 document.querySelector(".g").addEventListener("click", function () {
-  !secretWord.includes("G") ? fails(this) : correct (this, "G") 
+  !secretWord.includes("G") ? fails(this) : correct(this, "G");
 });
 document.querySelector(".h").addEventListener("click", function () {
-  !secretWord.includes("H") ? fails(this) : correct (this, "H") 
+  !secretWord.includes("H") ? fails(this) : correct(this, "H");
 });
 document.querySelector(".j").addEventListener("click", function () {
-  !secretWord.includes("J") ? fails(this) : correct (this, "J") 
+  !secretWord.includes("J") ? fails(this) : correct(this, "J");
 });
 document.querySelector(".k").addEventListener("click", function () {
-  !secretWord.includes("K") ? fails(this) : correct (this, "K") 
+  !secretWord.includes("K") ? fails(this) : correct(this, "K");
 });
 document.querySelector(".l").addEventListener("click", function () {
-  !secretWord.includes("L") ? fails(this) : correct (this, "L") 
+  !secretWord.includes("L") ? fails(this) : correct(this, "L");
 });
 document.querySelector(".z").addEventListener("click", function () {
-  !secretWord.includes("Z") ? fails(this) : correct (this, "Z") 
+  !secretWord.includes("Z") ? fails(this) : correct(this, "Z");
 });
 document.querySelector(".x").addEventListener("click", function () {
-  !secretWord.includes("X") ? fails(this) : correct (this, "X") 
+  !secretWord.includes("X") ? fails(this) : correct(this, "X");
 });
 document.querySelector(".c").addEventListener("click", function () {
-  !secretWord.includes("C") ? fails(this) : correct (this, "C") 
+  !secretWord.includes("C") ? fails(this) : correct(this, "C");
 });
 document.querySelector(".v").addEventListener("click", function () {
-  !secretWord.includes("V") ? fails(this) : correct (this, "V") 
+  !secretWord.includes("V") ? fails(this) : correct(this, "V");
 });
 document.querySelector(".b").addEventListener("click", function () {
-  !secretWord.includes("B") ? fails(this) : correct (this, "B") 
+  !secretWord.includes("B") ? fails(this) : correct(this, "B");
 });
 document.querySelector(".n").addEventListener("click", function () {
-  !secretWord.includes("N") ? fails(this) : correct (this, "N") 
+  !secretWord.includes("N") ? fails(this) : correct(this, "N");
 });
 document.querySelector(".m").addEventListener("click", function () {
-  !secretWord.includes("M") ? fails(this) : correct (this, "M") 
+  !secretWord.includes("M") ? fails(this) : correct(this, "M");
 });
